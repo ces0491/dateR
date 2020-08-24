@@ -36,7 +36,7 @@ get_date_col <- function(dt_data) {
 
   df_class_list <- list()
   for(n in 1:length(names(dt_data))) {
-    col_class <- class(dt_data[, n])
+    col_class <- class(dt_data[[n]])
     col_name <- names(dt_data)[n]
     df_class_list[col_name] <- col_class
   }
@@ -71,7 +71,7 @@ get_date_vector <- function(dt_data) {
 
   data_class <- class(dt_data)
 
-  if(data_class == "data.frame") {
+  if(any(data_class == "data.frame")) { # we use any because tibbles are classed as tbl, tbl_df and data.frame
     dt_df <- get_date_col(dt_data)
     if(is.null(dt_df)) {
       dts <- rownames(dt_data)
