@@ -6,14 +6,14 @@
 \usage{
 to_period(
   dt_data,
-  period = c("weekly", "monthly", "quarterly", "annual"),
+  period = c("daily", "weekly", "monthly", "quarterly", "annual"),
   aggregate_by = c("last", "sum", "avg", "median")
 )
 }
 \arguments{
-\item{dt_data}{date data to aggregate to monthly frequency}
+\item{dt_data}{date data to aggregate to frequency specified in argument \code{period}}
 
-\item{period}{string indicating the periodicity to convert data to}
+\item{period}{string indicating the frequency to convert data to}
 
 \item{aggregate_by}{string indicating how to aggregate data}
 }
