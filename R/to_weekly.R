@@ -70,7 +70,7 @@ to_weekly.data.frame <- function(dt_data, ...) {
   result <- reqd_dates %>%
     dplyr::mutate(dt_diff = date - dplyr::lag(date)) %>%
     tidyr::fill(dt_diff, .direction = "up") %>%
-    dplyr::filter(dt_diff == 7) %>%
+    dplyr::filter(abs(dt_diff) == 7) %>% # dates could be sorted in descending order so date_diff can be negative
     dplyr::select(-dt_diff)
 
   result

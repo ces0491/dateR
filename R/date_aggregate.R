@@ -7,8 +7,8 @@
 #' @return data.frame
 #'
 condense_dt <- function(dates_df,
-                     to_period = c("weekly", "monthly", "quarterly", "annual"),
-                     aggregate_by = c("last", "sum", "avg", "median")) {
+                        to_period = c("weekly", "monthly", "quarterly", "annual"),
+                        aggregate_by = c("last", "sum", "avg", "median")) {
 
   assertR::assert_present(colnames(dates_df), "date")
 
@@ -24,7 +24,7 @@ condense_dt <- function(dates_df,
     switch(type,
            sum = sum(x, na.rm = TRUE),
            avg = mean(x, na.rm = TRUE),
-           median = median(x, na.rm = TRUE),
+           median = stats::median(x, na.rm = TRUE),
            last = x)
   }
 
@@ -33,7 +33,7 @@ condense_dt <- function(dates_df,
     to_period == "monthly" ~ "month",
     to_period == "quarterly" ~ "quarter")
 
-  group_vars <- na.omit(c("year", period))
+  group_vars <- stats::na.omit(c("year", period))
   mutate_vars <- setdiff(names(dates_df), c("date", group_vars))
 
   sub_dates <- dates_ext %>%
@@ -102,7 +102,7 @@ expand_dt <- function(dates_df,
     to_period == "monthly" ~ "month",
     to_period == "quarterly" ~ "quarter")
 
-  group_vars <- na.omit(c("year", period))
+  group_vars <- stats::na.omit(c("year", period))
 
   daily_dates <- dates_ext %>%
     dplyr::left_join(dates_df, by = "date") %>%   # join the values to the expanded data.frame
