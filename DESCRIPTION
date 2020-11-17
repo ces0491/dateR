@@ -14,6 +14,7 @@ Imports:
     assertR,
     dplyr,
     lubridate,
+    magrittr,
     tidyr,
     zoo
 License: GPL-3

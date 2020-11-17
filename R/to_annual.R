@@ -17,7 +17,7 @@ to_annual <- function(dt_data, ...) UseMethod("to_annual")
 #'
 to_annual.Date <- function(dt_data, ...) {
 
-  max_date_in <- max(dt_data)
+  max_date_in <- max(dt_data, na.rm = TRUE)
 
   years_all <- format(dt_data, "%Y")
   years_unique <- unique(years_all)
@@ -25,7 +25,7 @@ to_annual.Date <- function(dt_data, ...) {
   dt_string <- paste(years_unique, 12, 31, sep = "-")
   reqd_dates <- as.Date(dt_string)
 
-  max_date_out <- max(reqd_dates)
+  max_date_out <- max(reqd_dates, na.rm = TRUE)
 
   if(max_date_in < max_date_out) {
 

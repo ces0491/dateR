@@ -16,7 +16,7 @@ to_weekly <- function(dt_data, ...) UseMethod("to_weekly")
 #'
 to_weekly.Date <- function(dt_data, ...) {
 
-  max_date_in <- max(dt_data)
+  max_date_in <- max(dt_data, na.rm = TRUE)
 
   weekly_dt <- data.frame(date = dt_data) %>%
     dplyr::mutate(week = as.numeric(date - min(date)) %/% 7) %>% # create period helper variable
@@ -27,9 +27,9 @@ to_weekly.Date <- function(dt_data, ...) {
   reqd_dates <- weekly_dt$date
 
   if((reqd_dates[max(weekly_dt$week)] - reqd_dates[max(weekly_dt$week) - 1]) < 7) {
-    max_date_out <- reqd_dates[max(weekly_dt$week) - 1]
+    max_date_out <- reqd_dates[max(weekly_dt$week, na.rm = TRUE) - 1]
   } else{
-    max_date_out <- reqd_dates[max(weekly_dt$week)]
+    max_date_out <- reqd_dates[max(weekly_dt$week, na.rm = TRUE)]
   }
 
   if(max_date_in > max_date_out) {

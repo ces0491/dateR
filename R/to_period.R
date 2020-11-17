@@ -5,6 +5,8 @@
 #' @param aggregate_by string indicating how to aggregate data
 #'
 #' @return \code{data.frame} or date vector depending on argument \code{dt_data}
+#'
+#' @importFrom magrittr %>%
 #' @export
 #'
 to_period <- function(dt_data,

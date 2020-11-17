@@ -23,7 +23,7 @@ to_quarterly.Date <- function(dt_data, ...) {
   if (all(dates_diff < 91)) {
     dt_seq <- dt_data
   } else {
-    dt_seq <- seq(min(dt_data), max(dt_data), by = "day")
+    dt_seq <- seq(min(dt_data, na.rm = TRUE), max(dt_data, na.rm = TRUE), by = "day")
   }
 
   eom_dt <- get_eom_dates(dt_seq)

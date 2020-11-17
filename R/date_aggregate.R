@@ -28,10 +28,9 @@ condense_dt <- function(dates_df,
            last = x)
   }
 
-  period <- dplyr::case_when(
-    to_period == "weekly" ~ "week",
-    to_period == "monthly" ~ "month",
-    to_period == "quarterly" ~ "quarter")
+  period <- dplyr::case_when(to_period == "weekly" ~ "week",
+                             to_period == "monthly" ~ "month",
+                             to_period == "quarterly" ~ "quarter")
 
   group_vars <- stats::na.omit(c("year", period))
   mutate_vars <- setdiff(names(dates_df), c("date", group_vars))
@@ -42,8 +41,8 @@ condense_dt <- function(dates_df,
     dplyr::filter(date == max(date)) %>%
     dplyr::ungroup()
 
-  max_date_in <- max(dates_df$date)
-  max_date_out <- max(sub_dates$date)
+  max_date_in <- max(dates_df$date, na.rm = TRUE)
+  max_date_out <- max(sub_dates$date, na.rm = TRUE)
 
   if(max_date_in < max_date_out) {
 
