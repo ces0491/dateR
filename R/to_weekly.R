@@ -67,11 +67,23 @@ to_weekly.data.frame <- function(dt_data, ...) {
     reqd_dates <- expand_dt(dates_df, to_period = "weekly", ...)
   }
 
-  result <- reqd_dates %>%
-    dplyr::mutate(dt_diff = date - dplyr::lag(date)) %>%
-    tidyr::fill(dt_diff, .direction = "up") %>%
-    dplyr::filter(abs(dt_diff) == 7) %>% # dates could be sorted in descending order so date_diff can be negative
-    dplyr::select(-dt_diff)
+  clean_weekly <- function(reqd_dates){
+    clean <- reqd_dates %>%
+      dplyr::mutate(dt_diff = date - dplyr::lag(date)) %>%
+      tidyr::fill(dt_diff, .direction = "up") %>%
+      dplyr::filter(abs(dt_diff) == 7) %>% # dates could be sorted in descending order so date_diff can be negative
+      dplyr::select(-dt_diff)
+    clean
+  }
+
+  group_var <- names(dplyr::group_keys(dt_data))
+
+  result <- split(reqd_dates, reqd_dates[, group_var]) %>%
+    purrr::map(~clean_weekly(.)) %>%
+    tibble::enframe() %>%
+    dplyr::select(-name) %>%
+    tidyr::unnest(cols = c(value)) %>%
+    data.frame()
 
   result
 }
