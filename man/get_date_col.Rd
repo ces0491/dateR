@@ -2,16 +2,16 @@
 % Please edit documentation in R/date_utils.R
 \name{get_date_col}
 \alias{get_date_col}
-\title{find and rename the date column}
+\title{Find and rename the date column}
 \usage{
 get_date_col(dt_data)
 }
 \arguments{
-\item{dt_data}{data.frame containing a column of class \code{Date}}
+\item{dt_data}{\code{data.frame} containing a column of class \code{Date}}
 }
 \value{
-data.frame with column of class \code{Date} renamed as "date" or NULL
+\code{data.frame} with column of class \code{Date} renamed as "date" or NULL if no date class col detected
 }
 \description{
-find and rename the date column
+Find and rename the date column
 }

@@ -22,3 +22,25 @@ testthat::test_that("dates correctly have their month end values returned", {
   testthat::expect_equal(test_dates, expected_dates)
 
 })
+
+testthat::test_that("weekends are correctly identified", {
+
+  dates <- seq(from = as.Date("2021-03-01"), to = as.Date("2021-03-07"), by ="day")
+
+  test <- is_weekend(dates)
+  expected <- c(rep(FALSE, 5), rep(TRUE, 2))
+
+  testthat::expect_equal(test, expected)
+
+})
+
+testthat::test_that("weekends are correctly removed", {
+
+  dates <- seq(from = as.Date("2021-03-01"), to = as.Date("2021-03-07"), by ="day")
+
+  test_dates <- remove_weekends(dates)
+  expected_dates <- seq(from = as.Date("2021-03-01"), to = as.Date("2021-03-05"), by ="day")
+
+  testthat::expect_equal(test_dates, expected_dates)
+
+})

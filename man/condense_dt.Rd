@@ -2,7 +2,7 @@
 % Please edit documentation in R/date_aggregate.R
 \name{condense_dt}
 \alias{condense_dt}
-\title{Condense time series in a data.frame from high to low frequency}
+\title{Condense time series in a \code{data.frame} to a lower frequency}
 \usage{
 condense_dt(
   dates_df,
@@ -13,13 +13,13 @@ condense_dt(
 \arguments{
 \item{dates_df}{\code{data.frame} containing a date column and values}
 
-\item{to_period}{string indicating the periodicity to convert data to}
+\item{to_period}{string indicating the frequency to convert data to}
 
 \item{aggregate_by}{string indicating how to aggregate data}
 }
 \value{
-data.frame
+\code{data.frame}
 }
 \description{
-Condense time series in a data.frame from high to low frequency
+Condense time series in a \code{data.frame} to a lower frequency
 }

@@ -1,10 +1,10 @@
-#' Condense time series in a data.frame from high to low frequency
+#' Condense time series in a \code{data.frame} to a lower frequency
 #'
 #' @param dates_df \code{data.frame} containing a date column and values
-#' @param to_period string indicating the periodicity to convert data to
+#' @param to_period string indicating the frequency to convert data to
 #' @param aggregate_by string indicating how to aggregate data
 #'
-#' @return data.frame
+#' @return \code{data.frame}
 #'
 condense_dt <- function(dates_df,
                         to_period = c("weekly", "monthly", "quarterly", "annual"),
@@ -46,12 +46,12 @@ condense_dt <- function(dates_df,
 
   if(max_date_in < max_date_out) {
 
-    message("max input date: ", max_date_in, " < max output date: ", max_date_out, " truncating sequence...")
+    message("Max input date: ", max_date_in, " < max output date: ", max_date_out, ". Truncating sequence...")
 
     sub_dates <- sub_dates %>%
       dplyr::filter(date != max_date_in)
 
-    message("generated date, ", max_date_out, ", dropped from sequence")
+    message("Generated date: ", max_date_out, ", dropped from sequence")
 
   }
 
@@ -64,12 +64,12 @@ condense_dt <- function(dates_df,
 
 }
 
-#' Expand time series in a data.frame from low to high frequency
+#' Expand time series in a \code{data.frame} to a higher frequency
 #'
 #' @param dates_df \code{data.frame} containing a date column and values
-#' @param to_period string indicating the periodicity to convert data to
+#' @param to_period string indicating the frequency to convert data to
 #'
-#' @return data.frame
+#' @return \code{data.frame}
 #'
 expand_dt <- function(dates_df,
                       to_period = c("weekly", "monthly", "quarterly", "annual")) {

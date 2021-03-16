@@ -2,7 +2,7 @@
 % Please edit documentation in R/date_utils.R
 \name{get_date_vector}
 \alias{get_date_vector}
-\title{get a vector of dates from \code{data.frame}, \code{zoo}, \code{xts}, or date named vectors}
+\title{Get a vector of dates from \code{data.frame}, \code{zoo}, \code{xts}, or date named vectors}
 \usage{
 get_date_vector(dt_data)
 }
@@ -13,5 +13,5 @@ get_date_vector(dt_data)
 a vector of class \code{Date}
 }
 \description{
-get a vector of dates from \code{data.frame}, \code{zoo}, \code{xts}, or date named vectors
+Get a vector of dates from \code{data.frame}, \code{zoo}, \code{xts}, or date named vectors
 }

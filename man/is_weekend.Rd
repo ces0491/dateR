@@ -9,7 +9,7 @@ is_weekend(dates, weekend_days = c("Saturday", "Sunday"), abbreviate = FALSE)
 \arguments{
 \item{dates}{vector of class \code{Date}}
 
-\item{weekend_days}{string indicating the days that are classified as weekend, e.g. "Saturday"}
+\item{weekend_days}{string indicating the days that are classified as weekend. Default to Saturday and Sunday}
 
 \item{abbreviate}{logical indicating whether the character vector of weekend days is abbreviated or not}
 }

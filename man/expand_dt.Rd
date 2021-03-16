@@ -2,18 +2,18 @@
 % Please edit documentation in R/date_aggregate.R
 \name{expand_dt}
 \alias{expand_dt}
-\title{Expand time series in a data.frame from low to high frequency}
+\title{Expand time series in a \code{data.frame} to a higher frequency}
 \usage{
 expand_dt(dates_df, to_period = c("weekly", "monthly", "quarterly", "annual"))
 }
 \arguments{
 \item{dates_df}{\code{data.frame} containing a date column and values}
 
-\item{to_period}{string indicating the periodicity to convert data to}
+\item{to_period}{string indicating the frequency to convert data to}
 }
 \value{
-data.frame
+\code{data.frame}
 }
 \description{
-Expand time series in a data.frame from low to high frequency
+Expand time series in a \code{data.frame} to a higher frequency
 }

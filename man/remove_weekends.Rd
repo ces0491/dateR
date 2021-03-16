@@ -13,7 +13,7 @@ remove_weekends(
 \arguments{
 \item{dt_data}{object containing date data}
 
-\item{weekend_days}{string indicating the days that are classified as weekend, e.g. "Saturday"}
+\item{weekend_days}{string indicating the days that are classified as weekend. Default to Saturday and Sunday}
 
 \item{abbreviate}{logical indicating whether the character vector of weekend days is abbreviated or not}
 }

@@ -1,8 +1,8 @@
 #' Get the end of month date
 #'
-#' @param dates vector of objects of class \code{date} or \code{character} with format Ymd
+#' @param dates vector of objects of class \code{Date}, \code{POSIXct}, or \code{character} with in year, month, day format
 #'
-#' @return vector of dates of the same size of \code{dates} but at month end
+#' @return vector of dates of the same size of argument \code{dates} but at month end
 #' @export
 #'
 #' @examples get_eom_dates("2016-01-10")
@@ -26,11 +26,11 @@ get_eom_dates <- function(dates) {
   eom_dt
 }
 
-#' find and rename the date column
+#' Find and rename the date column
 #'
-#' @param dt_data data.frame containing a column of class \code{Date}
+#' @param dt_data \code{data.frame} containing a column of class \code{Date}
 #'
-#' @return data.frame with column of class \code{Date} renamed as "date" or NULL
+#' @return \code{data.frame} with column of class \code{Date} renamed as "date" or NULL if no date class col detected
 #'
 get_date_col <- function(dt_data) {
 
@@ -61,7 +61,7 @@ get_date_col <- function(dt_data) {
   dt_data
 }
 
-#' get a vector of dates from \code{data.frame}, \code{zoo}, \code{xts}, or date named vectors
+#' Get a vector of dates from \code{data.frame}, \code{zoo}, \code{xts}, or date named vectors
 #'
 #' @param dt_data object containing date data
 #'
@@ -72,7 +72,7 @@ get_date_vector <- function(dt_data) {
   data_class <- class(dt_data)
 
   if(any(data_class == "data.frame")) { # we use any because tibbles are classed as tbl, tbl_df and data.frame
-    dt_df <- get_date_col(dt_data)
+    dt_df <- get_date_col(dt_data) # find the date column and rename it to 'date'
     if(is.null(dt_df)) {
       dts <- rownames(dt_data)
     } else {
@@ -80,7 +80,7 @@ get_date_vector <- function(dt_data) {
     }
   }
 
-  if(data_class == "Date") {
+  if(all(data_class == "Date")) {
     dts <- dt_data
   }
 
@@ -88,14 +88,14 @@ get_date_vector <- function(dt_data) {
     dts <- names(dt_data)
   }
 
-  if(data_class == "zoo" | data_class == "xts") {
+  if(all(data_class == "zoo" | data_class == "xts")) {
     dts <- zoo::index(data)
   }
 
   dt_vec <- try(as.Date(dts), silent = TRUE)
 
   if(class(dt_vec) == "try-error") {
-    stop("unable to extract date vector from dt_data")
+    stop("Unable to extract date vector from dt_data")
   }
 
   dt_vec
@@ -105,9 +105,8 @@ get_date_vector <- function(dt_data) {
 
 #' Determine if a date is a weekend
 #'
-
 #' @param dates vector of class \code{Date}
-#' @param weekend_days string indicating the days that are classified as weekend, e.g. "Saturday"
+#' @param weekend_days string indicating the days that are classified as weekend. Default to Saturday and Sunday
 #' @param abbreviate logical indicating whether the character vector of weekend days is abbreviated or not
 #'
 #' @return vector of class \code{logical} indicating weekend days
@@ -115,9 +114,13 @@ get_date_vector <- function(dt_data) {
 #'
 is_weekend <- function(dates, weekend_days = c("Saturday", "Sunday"), abbreviate = FALSE) {
 
-  all_days <- weekdays(as.Date("2020-05-31") + seq(7), abbreviate) #2020/05/31 was a Sunday
+  if(abbreviate) {
+    weekend_days <- substring(weekend_days, 1, 3)
+  }
 
-  assertR::assert_present(weekend_days, all_days)
+  all_days <- weekdays(as.Date("1991-04-30") + seq(7), abbreviate) # get weekdays from generated dates rather than specifying them so we have the option to use full or abbreviated names
+
+  assertR::assert_present(all_days, weekend_days)
 
   reqd_dates <- weekdays(dates, abbreviate) %in% weekend_days
 
@@ -127,7 +130,7 @@ is_weekend <- function(dates, weekend_days = c("Saturday", "Sunday"), abbreviate
 #' Remove weekends from the data
 #'
 #' @param dt_data object containing date data
-#' @param weekend_days string indicating the days that are classified as weekend, e.g. "Saturday"
+#' @param weekend_days string indicating the days that are classified as weekend. Default to Saturday and Sunday
 #' @param abbreviate logical indicating whether the character vector of weekend days is abbreviated or not
 #'
 #' @return data object with weekend days removed
@@ -139,10 +142,10 @@ remove_weekends <- function(dt_data, weekend_days = c("Saturday", "Sunday"), abb
 
   weekend_dates <- is_weekend(data_index, weekend_days, abbreviate)
 
-  if (length(dim(data)) < 2) {
-    reqd_dates <- data[!weekend_dates]
+  if (length(dim(data_index)) < 2) {
+    reqd_dates <- data_index[!weekend_dates]
   } else {
-    reqd_dates <- data[!weekend_dates, ]
+    reqd_dates <- data_index[!weekend_dates, ]
   }
 
   reqd_dates

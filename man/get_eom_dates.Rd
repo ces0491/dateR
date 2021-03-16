@@ -7,10 +7,10 @@
 get_eom_dates(dates)
 }
 \arguments{
-\item{dates}{vector of objects of class \code{date} or \code{character} with format Ymd}
+\item{dates}{vector of objects of class \code{Date}, \code{POSIXct}, or \code{character} with in year, month, day format}
 }
 \value{
-vector of dates of the same size of \code{dates} but at month end
+vector of dates of the same size of argument \code{dates} but at month end
 }
 \description{
 Get the end of month date
