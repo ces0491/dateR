@@ -7,7 +7,7 @@ test_that("correct trading dates are returned", {
     dplyr::select(date, trading_year, trading_month, trading_quarter, trading_week)
 
   test_file <- "test_calendar.rds"
-  src_dir <- system.file("testdata", package = "rlcDash")
+  src_dir <- system.file("testdata", package = "dateR")
   src_file <- paste(src_dir, test_file, sep = "/")
 
   expected_trading_calendar <- readRDS(src_file)
